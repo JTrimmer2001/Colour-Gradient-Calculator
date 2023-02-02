@@ -7,3 +7,8 @@ Second should be inner galaxy, ie half way between the core and outer edge. Aver
 Third should be the outer galaxy, ie outer half of the disk. Average over this area determines the outer colour
 
 With inner and outer colour determined, a result should be developed with a difference
+
+ALSO WORTH NOTING THE CODE CURRENTLY CONTAINS A FILE REQUEST FOR IMAGES STORED LOCALLY ON LAPTOP, WILL NEED CHANGING
+
+TODO: Figure out way of defining extent of a source
+      Figure out way of comparing two files (3D array? seperate variables?)
