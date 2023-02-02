@@ -1,0 +1,11 @@
+from CircleGenerator import circlegenerator
+from astropy.io import fits
+import numpy as np
+
+'''
+This code should find the points on a fits image that line up with the coords defined in CircleGenerator.py
+
+TODO: Find a way to define the size of circles needed
+      Import multiple fits files (consider array stacking with numpy)
+      Figure out system to quantify results (average, highest etc)
+'''

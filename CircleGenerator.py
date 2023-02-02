@@ -2,25 +2,37 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-a = 20 #
-b = 30 # a and b define the center of the circle, could couple to brightest pixel to isolate agn
-r = 30 #radius - find ways to define radius needed
 
-#The lower this value the higher quality the circle is with more points generated, 0.01 seems to be a good solid value
-stepSize = 0.01
+''' Circle Generator
 
-#Generated vertices
-positions = []
+    Inputs - a (int): x-coord of the center of the circle
+             b (int): y-coord of the center of the circle
+             r (int): radius of the circle
+    
+    Return - coords (np.array): 2D array of x- and y- coords in the circle. Coords are rounded to whole numbers using numpy.around
+                                x-coords are in [:,0], y-coords are in [:,1]
 
-t = 0
-while t < 2 * math.pi:
-    positions.append((np.around(r * math.cos(t) + a),np.around(r * math.sin(t) + b))) #np.around rounds to nearest whole number 
-    t += stepSize
+'''
 
-array = np.array(positions) #converts to array
+def circlegenerator(a,b,r):
 
-plt.scatter(array[:,0], array[:,1]) #plots the resulting coords - unneccessary for final code
+    #The lower this value the higher quality the circle is with more points generated, 0.01 seems to be a good solid value
+    stepSize = 0.01
 
-plt.show()
+    #Generated vertices
+    positions = []
 
-#ADD documentation at the top, would be useful to adapt this file into a callable process so circles can be generated on the fly
+    t = 0
+    while t < 2 * math.pi:
+        positions.append((np.around(r * math.cos(t) + a),np.around(r * math.sin(t) + b))) #np.around rounds to nearest whole number 
+        t += stepSize
+
+    coords = np.array(positions) #converts to array
+
+    return coords
+
+    #plt.scatter(array[:,0], array[:,1]) #plots the resulting coords - unneccessary for final code
+
+    #plt.show()
+
+    #ADD documentation at the top, would be useful to adapt this file into a callable process so circles can be generated on the fly
