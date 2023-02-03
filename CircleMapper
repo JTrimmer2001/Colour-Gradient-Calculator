@@ -1,6 +1,7 @@
 from CircleGenerator import circlegenerator
 from astropy.io import fits
 import numpy as np
+import math as mt
 
 '''
 This code should find the points on a fits image that line up with the coords defined in CircleGenerator.py
@@ -9,3 +10,36 @@ TODO: Find a way to define the size of circles needed
       Import multiple fits files (consider array stacking with numpy)
       Figure out system to quantify results (average, highest etc)
 '''
+
+
+def mapper():
+
+    '''
+    Function: 
+        mapper
+
+    Purpose: 
+        maps a set of coordinates onto an array, taking average value of pixels selected
+        Currently uses the circlegenerator function but this could be changed in future to allow more diverse mapping
+
+    Inputs: 
+        Image in FITS format (Not able to be specified outside of the code for the time being)
+
+    Outputs: 
+        AvgValue (float): Average value of pixels covered by coordinates 
+    '''
+    
+    with fits.open('150.17047000_2.21880000_cosmos_3dhst_F140W_sci.fits') as cutout: #Opens file in the with structure, file is auto closed once segment is exited
+        data = cutout[0].data #data is loaded into a variable
+
+    SideLength = mt.sqrt(data.size)
+
+    x = SideLength/2
+
+    r = 5
+
+    coords = circlegenerator(x,x,r)
+
+    
+
+    
