@@ -20,30 +20,84 @@ def mapper():
 
     Purpose: 
         maps a set of coordinates onto an array, taking average value of pixels selected
+        Finds difference between two circles to produce a "Gradient"
         Currently uses the circlegenerator function but this could be changed in future to allow more diverse mapping
 
     Inputs: 
         Image in FITS format (Not able to be specified outside of the code for the time being)
+        radius (Currently set by user input)
 
     Outputs: 
-        AvgValue (float): Average value of pixels covered by coordinates 
+        ColourGradient (float): takes difference of the inner and outer circles to produce a gradient
+                                - more negative value indicates a gradient towards blue at the outer edge
+                                - more positive value indicates a gradient towards red at the outer edge
+                                - greater the absolute value, the bigger the difference in colour
     '''
     
     with fits.open('150.17047000_2.21880000_cosmos_3dhst_F140W_sci.fits') as cutout: #Opens file in the with structure, file is auto closed once segment is exited
-        data = cutout[0].data #data is loaded into a variable
+        data1 = cutout[0].data #data is loaded into a variable
 
-    SideLength = mt.sqrt(data.size)
+    with fits.open('150.17047000_2.21880000_cosmos_3dhstF606W_sci.fits') as cutout: #To use this program these file location strings will need to be changed
+        data2 = cutout[0].data
 
-    x = SideLength/2
+    '''PLEASE NOTE, DATA1 SHOULD CORRESPOND TO REDDER DATA SUCH AS F140W, F160W ETC. DATA2 SHOULD CORRESPOND TO BLUER DATA'''
 
-    r = input("Enter radius of galaxy to be observed")
+    SideLength = mt.sqrt(data1.size) #This assumes that data1 and 2 have the same shape and size, shouldnt be an issue using the cosmos cutout generator
 
-    AGNext = circlegenerator(x,x,(r/5))
+    x = SideLength/2 #halves sidelength to find center (again, assumes same size and assumes square image)
 
-    innercircle = circlegenerator(x,x,(r/4)) #these lines should find the coords for three different bands within the agn, one close to the agn, one in the inner disk and one at the extent
+    r = input("Enter radius of galaxy to be observed") 
+    '''
+    Current method of determining radius, official value "Should" be obtainable via the hubble gz meta data file once I find it
+    !!Bear in mind the resolution of the picture being used!!
+    Radius is input as a number of pixels, so if source is 0.12" wide, and the resolution is 0.03" (Like ACS I think) then the radius is 2 pixels
+    '''
+    InnerCoords = circlegenerator(x,x,(r/5)) #Default inner circle is taken at 0.2Rsource from the center of the source
+    OuterCoords = circlegenerator(x,x,4*(r/5)) #Default outer circle is taken at 0.8Rsource from the center,
+                                               #made this choice so that the outer circle does actually cover a fair bit of the galaxy
 
-    coords = circlegenerator(x,x,r) #This should be expanded to discs, rather than 2D circles so that an average can be taken over a whole area of the source
-    #Otherwise, circles can be taken at different radii between these radii so that an average and progression is easier to calculate
+    Total1 = 0
+    Total2 = 0
+    Num = 0
+
+    for i in InnerCoords:
+        Pixel1 = data1.data[InnerCoords[1:i]:InnerCoords[2:i]] #'Should' sum the values of pixels selected by circle generator
+        Total1 += Pixel1
+        Pixel2= data2.data[InnerCoords[1:i]:InnerCoords[2:i]] #Does the same for the other image, should be an image taken in a different wavelength
+        Total2 += Pixel2
+        Num += 1 #Keeps count of pixels used for calculating the average
+
+    ColIn = (Total2/Num) - (Total1/Num) #Finds the colour on a circle closer to the middle of the agn (at r = 0.2Rsource)
+
+    Total1 = 0
+    Total2 = 0 #Resets totals so theres no mixing between the two circles
+    Num = 0
+
+    for i in OuterCoords:
+        Pixel1 = data1.data[OuterCoords[1:i]:OuterCoords[2:i]] #'Should' sum the values of pixels selected by circle generator
+        Total1 += Pixel1
+        Pixel2= data2.data[OuterCoords[1:i]:OuterCoords[2:i]] #Does the same for the other image, should be an image taken in a different wavelength
+        Total2 += Pixel2
+        Num += 1 #Keeps count of pixels used for calculating the average
+
+    ColOut = (Total2/Num) - (Total1/Num)
+
+    ColourGradient = ColIn - ColOut 
+
+    print("Colour gradient of source is " + ColourGradient) #Calculates a difference between inner and outer colour, more negative gradient means bluer outer edge
+
+    '''
+    NB FOR THE FUTURE:
+
+    More reliable results can be gained by taking average colour at more radii, 
+    potential for a loop to be used to run through all possible interger radii within bounds of the source
+
+    Data my be difficult to quantify, but could be used for one or two galaxies to examine interesting galaxies such as 
+    those with a large extent and a blue strip somewhere along the glactic disk, or for use on galaxies where there is a
+    gradient towards blue toward the outer area of the galaxy
+    
+    '''
+
     #Also, IPAC/NASA have an API that can be used to request images via the program, requires "Learning" XML lol
 
     
