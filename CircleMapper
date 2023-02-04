@@ -36,9 +36,15 @@ def mapper():
 
     x = SideLength/2
 
-    r = 5
+    r = input("Enter radius of galaxy to be observed")
 
-    coords = circlegenerator(x,x,r)
+    AGNext = circlegenerator(x,x,(r/5))
+
+    innercircle = circlegenerator(x,x,(r/4)) #these lines should find the coords for three different bands within the agn, one close to the agn, one in the inner disk and one at the extent
+
+    coords = circlegenerator(x,x,r) #This should be expanded to discs, rather than 2D circles so that an average can be taken over a whole area of the source
+    #Otherwise, circles can be taken at different radii between these radii so that an average and progression is easier to calculate
+    #Also, IPAC/NASA have an API that can be used to request images via the program, requires "Learning" XML lol
 
     
 
