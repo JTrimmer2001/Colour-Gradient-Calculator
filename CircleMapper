@@ -46,7 +46,7 @@ def mapper():
 
     x = SideLength/2 #halves sidelength to find center (again, assumes same size and assumes square image)
 
-    r = input("Enter radius of galaxy to be observed") 
+    r = int(input("Enter radius of galaxy to be observed") )
     '''
     Current method of determining radius, official value "Should" be obtainable via the hubble gz meta data file once I find it
     !!Bear in mind the resolution of the picture being used!!
@@ -59,12 +59,20 @@ def mapper():
     Total1 = 0
     Total2 = 0
     Num = 0
+    i = int(0)
 
-    for i in InnerCoords:
-        Pixel1 = data1.data[InnerCoords[1:i]:InnerCoords[2:i]] #'Should' sum the values of pixels selected by circle generator
+    #print(InnerCoords[0,0])
+    #print(InnerCoords[1,1])
+    #print(data1.data[InnerCoords[0,i]:InnerCoords[1,i]])
+
+    size = np.size(InnerCoords)/2
+
+    while i <= size-1:
+        Pixel1 = data1[InnerCoords[i,0],InnerCoords[i,1]] #'Should' sum the values of pixels selected by circle generator
         Total1 += Pixel1
-        Pixel2= data2.data[InnerCoords[1:i]:InnerCoords[2:i]] #Does the same for the other image, should be an image taken in a different wavelength
+        Pixel2 = data2[InnerCoords[i,0],InnerCoords[i,1]] #Does the same for the other image, should be an image taken in a different wavelength
         Total2 += Pixel2
+        i+=1
         Num += 1 #Keeps count of pixels used for calculating the average
 
     ColIn = (Total2/Num) - (Total1/Num) #Finds the colour on a circle closer to the middle of the agn (at r = 0.2Rsource)
@@ -72,19 +80,22 @@ def mapper():
     Total1 = 0
     Total2 = 0 #Resets totals so theres no mixing between the two circles
     Num = 0
+    i=0
 
-    for i in OuterCoords:
-        Pixel1 = data1.data[OuterCoords[1:i]:OuterCoords[2:i]] #'Should' sum the values of pixels selected by circle generator
+    while i <= size-1:
+        Pixel1 = data1[OuterCoords[i,0],OuterCoords[i,1]] #'Should' sum the values of pixels selected by circle generator
         Total1 += Pixel1
-        Pixel2= data2.data[OuterCoords[1:i]:OuterCoords[2:i]] #Does the same for the other image, should be an image taken in a different wavelength
+        Pixel2 = data2[OuterCoords[i,0],OuterCoords[i,1]] #Does the same for the other image, should be an image taken in a different wavelength
         Total2 += Pixel2
+        i+=1
         Num += 1 #Keeps count of pixels used for calculating the average
 
     ColOut = (Total2/Num) - (Total1/Num)
 
     ColourGradient = ColIn - ColOut 
 
-    print("Colour gradient of source is " + ColourGradient) #Calculates a difference between inner and outer colour, more negative gradient means bluer outer edge
+    print("Colour gradient of source is ", ColourGradient) #Calculates a difference between inner and outer colour, more negative gradient means redder outer edge
+    print("Inner colour: ", ColIn, ", Outer colour: ", ColOut)
 
     '''
     NB FOR THE FUTURE:

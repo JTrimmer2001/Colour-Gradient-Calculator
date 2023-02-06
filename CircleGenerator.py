@@ -24,7 +24,7 @@ def circlegenerator(a,b,r):
 
     t = 0
     while t < 2 * math.pi:
-        positions.append((np.around(r * math.cos(t) + a),np.around(r * math.sin(t) + b))) #np.around rounds to nearest whole number 
+        positions.append((int(np.around(r * math.cos(t) + a)),int(np.around(r * math.sin(t) + b)))) #np.around rounds to nearest whole number 
         t += stepSize
 
     coords = np.array(positions) #converts to array
