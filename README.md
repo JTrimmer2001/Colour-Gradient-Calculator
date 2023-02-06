@@ -25,3 +25,11 @@ The files to be looked at must be manually changed within the code at the moment
 STILL NEEDS TESTING!! Produces "Sensible" results but the actual value isnt directly related to actual colour since it is based on values between 0 and 1 as per the pixel values.
 
 User input of the radius of the source is required once the program is running
+
+===========================================================================
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+===========================================================================
