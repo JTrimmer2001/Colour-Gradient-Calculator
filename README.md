@@ -1,7 +1,7 @@
 # Colour-Gradient-Calculator
 Code to analyse the colour over the extent of a source
 
-======================================================================================================
+===========================================================================
 
 Very primitive method: 
       -Takes in two images in different wavelengths and a user defined radius in pixels (can be taken from a catalogue)
@@ -18,7 +18,7 @@ Future improvements:
       -Change to method, potentially a continuous analysis of the colour and production of a corresponding graph
       -Implementation of the IPAC/NASA API to allow a set of coordinates to be input and the image files to be gathered and processed without user input
       
-======================================================================================================
+===========================================================================
 
 The files to be looked at must be manually changed within the code at the moment, locations for the files to be used are indicated with comments
 
