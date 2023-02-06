@@ -101,5 +101,6 @@ def mapper():
     #Also, IPAC/NASA have an API that can be used to request images via the program, requires "Learning" XML lol
 
     
+mapper()
 
     
