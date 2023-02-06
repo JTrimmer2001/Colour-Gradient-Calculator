@@ -137,7 +137,7 @@ def continuousmapper():
         Total2 = 0
         
         coords = circlegenerator(x,x,i)
-        size = np.size(coords)/2
+        size = int(np.size(coords)/2)
 
         num = 0
 
@@ -156,7 +156,7 @@ def continuousmapper():
     blueavg = np.array(blueavg)
     redavg = np.array(redavg)
 
-    x = colour[:,0]
+    '''x = colour[:,0]
     y = colour[:,1]
     plt.plot(x,y)
 
@@ -168,7 +168,33 @@ def continuousmapper():
     rx = redavg[:,0]
     ry = redavg[:,1]
 
-    plt.plot(rx,ry,'r-')
+    plt.plot(rx,ry,'r-')'''#This segment will plot three lines - flux/data/whatever for "blue" "red" and "total" emission
+
+    i = 0
+
+    total = []
+    bluepercent = []
+    redpercent = []
+
+    for i in range(radius):
+
+        b = blueavg[i,1]
+        r = redavg[i,1]
+        t = b + r
+        total.append((i,t))
+
+        averageb = float(100 * b/t)
+
+        bluepercent.append((i, averageb))
+
+        averager = float(100 * r/t)
+        redpercent.append((i, averager))
+
+    bluepercent = np.array(bluepercent)
+    redpercent = np.array(redpercent)
+
+    plt.plot(bluepercent[:,0],bluepercent[:,1], 'b-')
+    plt.plot(redpercent[:,0],redpercent[:,1],'r-')
 
     plt.show()
 
