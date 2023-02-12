@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
              b (int): y-coord of the center of the circle
              r (int): radius of the circle
     
-    Return - coords (np.array): 2D array of x- and y- coords in the circle. Coords are rounded to whole numbers using numpy.around
+    Return - positions (np.array): 2D array of x- and y- coords in the circle. Coords are rounded to whole numbers using numpy.around
                                 x-coords are in [:,0], y-coords are in [:,1]
 
 '''
@@ -27,9 +27,9 @@ def circlegenerator(a,b,r):
         positions.append((np.around(r * math.cos(t) + a),np.around(r * math.sin(t) + b))) #np.around rounds to nearest whole number 
         t += stepSize
 
-    coords = np.array(positions) #converts to array
+    positions = np.array(positions) #converts to array
 
-    return coords
+    return positions
 
     #plt.scatter(array[:,0], array[:,1]) #plots the resulting coords - unneccessary for final code
 
