@@ -1,14 +1,27 @@
 # Colour-Gradient-Calculator
-Code to analyse the gradient of colour over the extent of a distant galaxy (WIP)
+Code to analyse the colour over the extent of a source
 
-Code should take in two images, one of each colour being examined. Circle (or ellipse) should be drawn over image at intervals, so there are three regions
-First region contains the galactic core, not examined because should emit brightly over all spectrums
-Second should be inner galaxy, ie half way between the core and outer edge. Average over this area determines the inner colour
-Third should be the outer galaxy, ie outer half of the disk. Average over this area determines the outer colour
+===========================================================================
 
-With inner and outer colour determined, a result should be developed with a difference
+Very primitive method: 
+      -Takes in two images in different wavelengths and a user defined radius in pixels (can be taken from a catalogue)
+      -Draws a pair of circles over the images given, one near the center and one near the exterior
+      -averages values of the pixels covered by these circles
+      -Finds the difference between the two averages to approximate a gradient
+      
+Limitations:
+      -Only compares two circles, not able to track fine changes in colour within the galaxy
+      -Only draws circles, for a very flat source this may be an issue
+      -Slow to work, requires manual switching of files and user input for the radius of the galaxy
+      
+Future improvements:
+      -Change to method, potentially a continuous analysis of the colour and production of a corresponding graph
+      -Implementation of the IPAC/NASA API to allow a set of coordinates to be input and the image files to be gathered and processed without user input
+      
+===========================================================================
 
-ALSO WORTH NOTING THE CODE CURRENTLY CONTAINS A FILE REQUEST FOR IMAGES STORED LOCALLY ON LAPTOP, WILL NEED CHANGING
+The files to be looked at must be manually changed within the code at the moment, locations for the files to be used are indicated with comments
 
-TODO: Figure out way of defining extent of a source
-      Figure out way of comparing two files (3D array? seperate variables?)
+STILL NEEDS TESTING!! Produces "Sensible" results but the actual value isnt directly related to actual colour since it is based on values between 0 and 1 as per the pixel values.
+
+User input of the radius of the source is required once the program is running

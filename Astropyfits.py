@@ -6,7 +6,7 @@ from astropy.io import fits
 
 
 def image_viewer():
-    hdulist = fits.open("C:/Users/Jet26/Documents/PHYS 369 Code and data/Data/Subaru B matched/subaru_B_matched-psf_070_sci_20.fits")
+    hdulist = fits.open("file name")
 
     hdulist.info()
     image_data = hdulist[0].data
@@ -23,7 +23,7 @@ def image_viewer():
 
 
 def table_viewer():
-    hdulist = fits.open("C:/Users/Jet26/Documents/PHYS 369 Code and data/Data/cosmos2015_NOphotometry_masses_sfrs.fits")
+    hdulist = fits.open("file name")
 
     #hdulist.info()
 
