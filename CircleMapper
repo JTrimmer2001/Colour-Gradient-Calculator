@@ -113,11 +113,11 @@ def mapper():
 def continuousmapper():
 
 
-    radius = 22 #Radius in pixels
-    with fits.open("/Users/Jet26/Documents/Data/subaru/put coords here lol/0001_150.09285000_2.73443000_COSMOS.V.original_psf.v2.fits") as cutout: #Opens file in the with structure, file is auto closed once segment is exited
+    radius = 6 #Radius in pixels
+    with fits.open("/Users/Jet26/Documents/Data/circle stuff/1011872/0001_149.50862000_2.84029000_COSMOS.V.original_psf.v2.fits") as cutout: #Opens file in the with structure, file is auto closed once segment is exited
         data1 = cutout[0].data #data is loaded into a variable
 
-    with fits.open("/Users/Jet26/Documents/Data/subaru/put coords here lol/0001_150.09285000_2.73443000_COSMOS.B.original_psf.v2.fits") as cutout: #To use this program these file location strings will need to be changed
+    with fits.open("/Users/Jet26/Documents/Data/circle stuff/1011872/0001_149.50862000_2.84029000_COSMOS.B.original_psf.v2.fits") as cutout: #To use this program these file location strings will need to be changed
         data2 = cutout[0].data
 
     '''PLEASE NOTE, DATA1 SHOULD CORRESPOND TO REDDER DATA SUCH AS F140W, F160W ETC. DATA2 SHOULD CORRESPOND TO BLUER DATA'''
