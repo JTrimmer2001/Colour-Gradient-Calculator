@@ -1,6 +1,7 @@
 from CircleGenerator import circlegenerator
 from astropy.io import fits
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import numpy as np
 import math as mt
 
@@ -113,16 +114,17 @@ def mapper():
 def continuousmapper():
 
 
-    radius = 6 #Radius in pixels
-    with fits.open("/Users/Jet26/Documents/Data/circle stuff/1011872/0001_149.50862000_2.84029000_COSMOS.V.original_psf.v2.fits") as cutout: #Opens file in the with structure, file is auto closed once segment is exited
+    
+    with fits.open('sources/298256/0001_149.93742000_1.73891000_COSMOS.V.original_psf.v2.fits') as cutout: #Opens file in the with structure, file is auto closed once segment is exited
         data1 = cutout[0].data #data is loaded into a variable
 
-    with fits.open("/Users/Jet26/Documents/Data/circle stuff/1011872/0001_149.50862000_2.84029000_COSMOS.B.original_psf.v2.fits") as cutout: #To use this program these file location strings will need to be changed
+    with fits.open('sources/298256/0001_149.93742000_1.73891000_COSMOS.B.original_psf.v2.fits') as cutout: #To use this program these file location strings will need to be changed
         data2 = cutout[0].data
 
     '''PLEASE NOTE, DATA1 SHOULD CORRESPOND TO REDDER DATA SUCH AS F140W, F160W ETC. DATA2 SHOULD CORRESPOND TO BLUER DATA'''
 
     SideLength = mt.sqrt(data1.size) #This assumes that data1 and 2 have the same shape and size, shouldnt be an issue using the cosmos cutout generator
+    radius = 6
 
     x = SideLength/2 #halves sidelength to find center (again, assumes same size and assumes square image)
 
@@ -158,19 +160,21 @@ def continuousmapper():
 
     x = colour[:,0]
     y = colour[:,1]
-    plt.plot(x,y)
+    '''plt.plot(x,y)
 
+    '''
     bx = blueavg[:,0]
     by = blueavg[:,1]
+    '''
 
     plt.plot(bx,by,'b-')
-
+    '''
     rx = redavg[:,0]
     ry = redavg[:,1]
-
+    '''
     plt.plot(rx,ry,'r-')#This segment will plot three lines - flux/data/whatever for "blue" "red" and "total" emission
 
-    plt.show()
+    plt.show()'''
 
     i = 0
 
@@ -195,8 +199,31 @@ def continuousmapper():
     bluepercent = np.array(bluepercent)
     redpercent = np.array(redpercent)
 
-    plt.plot(bluepercent[:,0],bluepercent[:,1], 'b-')
+    '''plt.plot(bluepercent[:,0],bluepercent[:,1], 'b-')
     plt.plot(redpercent[:,0],redpercent[:,1],'r-')
+
+    plt.show()'''
+
+    mpl.rcParams['font.size'] = 13
+    mpl.rcParams['figure.figsize'] = [10,5]
+
+    fig, (ax1,ax2) = plt.subplots(1,2)
+
+    ax1.plot(bx,by,'b-',label='B Band')
+    ax1.plot(rx,ry,'r-',label='V Band')
+    ax1.plot(x,y,'g-',label='B-V')
+    ax1.set_xlabel('Radius (pixels)')
+    ax1.set_ylabel('Average count per pixel')
+    ax1.legend(loc='upper right')
+
+    ax2.plot(bluepercent[:,0],bluepercent[:,1],'b-')
+    ax2.plot(redpercent[:,0],redpercent[:,1],'r-')
+    ax2.set_xlabel('Radius (pixels)')
+    ax2.set_ylabel('Percentage in each band per pixel')
+
+    fig.tight_layout()
+
+    plt.savefig('sources/298256/combined_unchanged.png')
 
     plt.show()
 
