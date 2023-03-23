@@ -110,14 +110,27 @@ def mapper():
 
 
 
-def continuousmapper():
+def continuousmapper(red,blue,r):
+    '''
+    Params: 
+            red (red file string)
+            blue (blue file string)
+            r (radius in pixels (int))
+            
+    Returns:
+            colour (currently incorrect, b-v)
+            blueavg (blue flux)
+            bluepercent (percentage of total thats blue)
+            redavg (red flux)
+            redpercent (percentage of total thats red)
+    '''
 
 
-    radius = 6 #Radius in pixels
-    with fits.open("/Users/Jet26/Documents/Data/circle stuff/1011872/0001_149.50862000_2.84029000_COSMOS.V.original_psf.v2.fits") as cutout: #Opens file in the with structure, file is auto closed once segment is exited
+    radius = r #Radius in pixels
+    with fits.open(red) as cutout: #Opens file in the with structure, file is auto closed once segment is exited
         data1 = cutout[0].data #data is loaded into a variable
 
-    with fits.open("/Users/Jet26/Documents/Data/circle stuff/1011872/0001_149.50862000_2.84029000_COSMOS.B.original_psf.v2.fits") as cutout: #To use this program these file location strings will need to be changed
+    with fits.open(blue) as cutout: #To use this program these file location strings will need to be changed
         data2 = cutout[0].data
 
     '''PLEASE NOTE, DATA1 SHOULD CORRESPOND TO REDDER DATA SUCH AS F140W, F160W ETC. DATA2 SHOULD CORRESPOND TO BLUER DATA'''
@@ -156,7 +169,7 @@ def continuousmapper():
     blueavg = np.array(blueavg)
     redavg = np.array(redavg)
 
-    x = colour[:,0]
+    '''x = colour[:,0]
     y = colour[:,1]
     plt.plot(x,y)
 
@@ -170,7 +183,7 @@ def continuousmapper():
 
     plt.plot(rx,ry,'r-')#This segment will plot three lines - flux/data/whatever for "blue" "red" and "total" emission
 
-    plt.show()
+    plt.show()'''
 
     i = 0
 
@@ -181,27 +194,26 @@ def continuousmapper():
     for i in range(radius):
 
         b = blueavg[i,1]
-        r = redavg[i,1]
-        t = b + r
+        R = redavg[i,1]
+        t = b + R
         total.append((i,t))
 
         averageb = float(100 * b/t)
 
         bluepercent.append((i, averageb))
 
-        averager = float(100 * r/t)
+        averager = float(100 * R/t)
         redpercent.append((i, averager))
 
     bluepercent = np.array(bluepercent)
     redpercent = np.array(redpercent)
 
-    plt.plot(bluepercent[:,0],bluepercent[:,1], 'b-')
+    '''plt.plot(bluepercent[:,0],bluepercent[:,1], 'b-')
     plt.plot(redpercent[:,0],redpercent[:,1],'r-')
 
-    plt.show()
+    plt.show()'''
 
+    return colour,blueavg,bluepercent,redavg,redpercent
 
-
-continuousmapper()
 
     
