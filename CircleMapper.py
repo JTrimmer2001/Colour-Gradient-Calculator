@@ -161,7 +161,7 @@ def continuousmapper(red,blue,r):
                 Total2 += Pixel2
                 num += 1
         
-        colour.append((i,((Total2/num) - (Total1/num)) ))
+        colour.append((i,((Total2/num)/(Total1/num)) ))
         blueavg.append((i, (Total2/num)))
         redavg.append((i,(Total1/num)))
 
