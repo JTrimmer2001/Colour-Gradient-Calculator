@@ -103,7 +103,7 @@ def plotter():
             ax2.plot(x,'b_per',data=source,color=(0.3,0.3,0.3),alpha=0.01*shade,zorder=0)
             ax2.plot(x,'r_per',data=source,color=(0.8,0.8,0.8),alpha=0.01*shade,zorder=0)
 
-            ax3.plot(x,'ratio',data=source,color=(0.2,0.2,0.2),alpha=0.01*shade,zorder=0)
+            ax3.plot(x,'ratio',data=source,color=(0.1,0.1,0.1),alpha=0.01*shade,zorder=0)
 
     ax3.set_xlabel('radius (pixels)')
     ax1.set_ylabel('Total count')
